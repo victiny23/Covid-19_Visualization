@@ -29,12 +29,13 @@ plt.show()
 us_df = df[df['Country'] == 'US'].groupby(['Date']).sum()
 china_df = df[df['Country'] == 'China'].groupby(['Date']).sum()
 
-""" China """
+""" China 
 fig = china_df[['Confirmed','Recovered','Deaths','Active']].\
     plot(figsize=(12, 8), linewidth=2)
 fig.set_xlabel('Date')
 fig.set_ylabel('# of Cases')
 fig.set_title('Covid-19 Cases in China')
+"""
 
 """ Worldwide vs US total
 fig = plt.figure(figsize=(12,8))
@@ -78,7 +79,7 @@ plt.show()
 
 
 
-""" Top 10 countries with the most cases"""
+""" Top 10 countries with the most cases
 total_country_df = df.groupby(['Country']).sum()
 total_country_df = total_country_df.\
         sort_values([ 'Confirmed'], ascending=[0])
@@ -102,4 +103,12 @@ plt.suptitle('Countries with the most cases', fontsize=25)
 plt.legend(loc='upper left')
 plt.tight_layout()
 plt.show()
+"""
 
+""" US Daily Cases and Deaths"""
+us_df = us_df.reset_index()
+us_df['Daily Confirmed'] = us_df['Confirmed'].sub(us_df['Confirmed'].shift())
+us_df['Daily Deaths'] = us_df['CDeaths'].sub(us_df['Deaths'].shift())
+
+fig = plt.figure(figsize=(12, 8))
+ax = fig.add_subplot(111)
