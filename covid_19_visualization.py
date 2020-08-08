@@ -142,7 +142,7 @@ plt.legend(loc='upper right')
 plt.show()
 """
 
-""" US Daily Cases and Deaths"""
+""" Worldwide Daily Cases and Deaths"""
 worldwide_df['Daily Confirmed'] = worldwide_df['Confirmed'].sub(worldwide_df['Confirmed'].shift())
 worldwide_df['Daily Deaths'] = worldwide_df['Deaths'].sub(worldwide_df['Deaths'].shift())
 
@@ -207,7 +207,7 @@ plt.show()
 """
 
 """ Pie Chart Top 10 Countries"""
-yesterday = date.today() - timedelta(days=2)
+yesterday = date.today() - timedelta(days=1)
 today_df = df[df['Date'] == pd.Timestamp(yesterday)]
 top_10 = today_df.sort_values(['Confirmed'], ascending=False)[:10]
 top_10.loc['rest-of-world'] = today_df.sort_values(['Confirmed'], ascending=False)[10:].sum()
