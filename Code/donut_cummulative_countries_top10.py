@@ -42,6 +42,7 @@ for i, p in enumerate(wedges):
                 xytext=(1.35*np.sign(x), 1.25*y),
                 textcoords='data',
                 horizontalalignment=horizontal_alignment, **kw)
+
 plt.title('Hardest Hit Countries Worldwide',
          fontsize=30, fontweight='bold')
 ax.text(0, 0, 'Data updated\n' + yesterday.strftime('%Y-%m-%d'),
