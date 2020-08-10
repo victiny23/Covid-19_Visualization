@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cbook as cbook
 import matplotlib.patches as patches
 from datetime import date, timedelta
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
@@ -67,6 +66,7 @@ theme = plt.get_cmap('plasma')
 theme_color = [theme(1.*i/num_colors) for i in range(num_colors)]
 ax.set_prop_cycle('color', theme_color)
 
+# no labels needed with flag patch
 wedges, _ = plt.pie(top_10['Confirmed'],
                         # labels=labels,
                         startangle=-45,
@@ -117,7 +117,7 @@ for i in range(len(top_10)):
     im = Image.fromarray(np.uint8(img*255))
     img_to_pie(im.rotate(-90+angles[i]), wedges[i], xy=positions[i], zoom=zooms[i])
     wedges[i].set_zorder(10)
-""""""
+
 plt.title('Hardest Hit Countries Worldwide',
          fontsize=28, fontweight='bold')
 ax.text(1.3, -1.1, 'Data updated\n' + yesterday.strftime('%Y-%m-%d'),
@@ -126,17 +126,21 @@ ax.text(1.3, -1.1, 'Data updated\n' + yesterday.strftime('%Y-%m-%d'),
 # Add patch in the center of the donut
 center_patch = plt.imread('C:\\Users\\Victiny\\Python_Project\\Covid-19_Visualization\\Flag\\virus.jpg',
                           format='jpg')
+# convert np.array to PIL image
 cp_im = Image.fromarray(255 - np.uint8(center_patch*255))
+# crop the PIL image
 width, height = cp_im.size
 diff = (width - height)/2
 left, right = diff, width - diff
+# upper left: (0, 0), right bottom: (width, height)
 cp_im_crop = cp_im.crop((left, 0, right, height))
+# show the omage in the center with extent
 imc = ax.imshow(cp_im_crop, extent=(-0.55, 0.55, -0.55, 0.55))
+# create a circle as patch
 patch = patches.Circle((0, 0), radius=0.55,
                        transform=ax.transData, color='gray', fill=False)
-
+# clip the image to a circle
 imc.set_clip_path(patch)
-""""""
 ax.axis('off')
 plt.show()
 
